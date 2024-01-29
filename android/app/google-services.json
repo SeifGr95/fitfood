@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "158341961420",
+    "project_id": "stage-f1169",
+    "storage_bucket": "stage-f1169.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:158341961420:android:93c57082d645883a905469",
+        "android_client_info": {
+          "package_name": "com.aliret.fitfood"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7FW_uZnKMcO4ceHmNvVWgNxFxp-yQShE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
