@@ -223,6 +223,13 @@ class _HomeScreenWidgetState extends State<HomeScreenWidget> {
         ),
         const SizedBox(height: 10),
         FoodTypeWidget(items: widget.pizza),
+         SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                   Navigator.pushReplacementNamed(context, '/productListScreen');
+              },
+              child: Text('list Product'),
+            ),
         Padding(
           padding: const EdgeInsets.all(14.0),
           child: Column(

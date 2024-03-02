@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:async';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fitfood/routes/routes.dart';
+import 'package:fitfood/screens/ScreenTest/produit.dart';
 import 'package:fitfood/screens/splash_screen.dart';
 import 'package:fitfood/services/preferences.dart';
 import 'package:fitfood/style.dart';
@@ -60,7 +61,9 @@ class MyApp extends StatelessWidget {
       locale: lang != null ? Locale(lang!, '') : const Locale('en', ''),
       //initialRoute: '/login',
       routes: Routes.all,
-      home: const SplashScreen(),
+      home: 
+      const SplashScreen(),
+
       // home: BlocProvider(
       //   create: (context) => RandomRecipeBloc(),
       //   child: const RandomRecipe(),

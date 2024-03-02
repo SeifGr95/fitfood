@@ -138,149 +138,151 @@ class _DiaryState extends State<Diary> {
       child: Scaffold(
         backgroundColor: Colors.grey.shade200,
         appBar: AppBar(
-          bottom: PreferredSize(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                      icon:
-                          const Icon(CupertinoIcons.arrowtriangle_left_circle),
-                      onPressed: () async {
-                        setState(() {
-                          today = today.add(const Duration(days: -1));
-                        });
-                        Diet? diet = await dietRepo
-                            .getByDay(today.toString().split(' ')[0]);
-                        setState(() {
-                          currentDiet = diet ??
-                              Diet(
-                                  dailyCalory: profile.idealCalory,
-                                  dailyCarbs: profile.idealCarbohydrate,
-                                  dailyFat: profile.idealFat,
-                                  dailyProtein: profile.idealProtein,
-                                  day: today.toString().split(' ')[0],
-                                  uid: profile.uid);
-                          controllerDate.text = today.toString().split(' ')[0];
-                        });
-                        int drinked = (currentDiet.water / 0.25).round() - 1;
-                        List<WaterIntake> waterintakee = List.generate(
-                            (profile.water! / 0.25).round(),
-                            (index) => WaterIntake(
-                                index: index,
-                                drinked: index <= drinked ? true : false));
-                        setState(() {
-                          waterintake = waterintakee;
-                        });
-                        refreshProccess(currentDiet);
-                      }),
-                  InkWell(
-                    onTap: () async {
-                      DateTime? day = await showDatePicker(
-                          errorInvalidText: AppLocalizations.of(context)!.date_out_of_range,
-                          context: context,
-                          initialDate: today,
-                          firstDate: today.add(const Duration(days: -30)),
-                          lastDate: today.add(const Duration(days: 30)));
-                      if (day != null) {
-                        Diet? diet = await dietRepo
-                            .getByDay(day.toString().split(' ')[0]);
-                        Profile? pr = await preferences.getUser();
-                        setState(() {
-                          today = day;
-                          currentDiet = diet ??
-                              Diet(
-                                  dailyCalory: profile.idealCalory,
-                                  dailyCarbs: profile.idealCarbohydrate,
-                                  dailyFat: profile.idealFat,
-                                  dailyProtein: profile.idealProtein,
-                                  day: today.toString().split(' ')[0],
-                                  uid: profile.uid);
-                          if (pr != null) {
-                            profile = pr;
-                          }
-                        });
-                        int drinked = (currentDiet.water / 0.25).round() - 1;
-                        List<WaterIntake> waterintakee = List.generate(
-                            (profile.water! / 0.25).round(),
-                            (index) => WaterIntake(
-                                index: index,
-                                drinked: index <= drinked ? true : false));
-                        setState(() {
-                          waterintake = waterintakee;
-                        });
-                        Weight? recordedWeightt =
-                            await weightRepo.getWeightByUidDate(
-                                profile.uid!, today.toString().split(' ')[0]);
-                        setState(() {
-                          recordedWeight = recordedWeightt;
-                          if (recordedWeightt != null) {
-                            objectifWeight = recordedWeightt.weight! -
-                                profile.startingWeight!;
-                          }
-                        });
-                        refreshProccess(currentDiet);
-                      }
-                    },
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.calendar_today, size: 20),
-                        Text(today == todayDate
-                            ? " " + AppLocalizations.of(context)!.today
-                            : today == todayDate.add(const Duration(days: -1))
-                                ? " " + AppLocalizations.of(context)!.yesterday
-                                : today ==
-                                        todayDate.add(const Duration(days: 1))
-                                    ? " " +
-                                        AppLocalizations.of(context)!.tomorrow
-                                    : " ${DateFormat("EEEE").format(today)}, ${DateFormat("d MMMM").format(today)}"),
-                      ],
-                    ),
-                  ),
-                  IconButton(
-                      icon:
-                          const Icon(CupertinoIcons.arrowtriangle_right_circle),
-                      onPressed: () async {
-                        setState(() {
-                          today = today.add(const Duration(days: 1));
-                        });
-                        Diet? diet = await dietRepo
-                            .getByDay(today.toString().split(' ')[0]);
-                        setState(() {
-                          currentDiet = diet ??
-                              Diet(
-                                  dailyCalory: profile.idealCalory,
-                                  dailyCarbs: profile.idealCarbohydrate,
-                                  dailyFat: profile.idealFat,
-                                  dailyProtein: profile.idealProtein,
-                                  day: today.toString().split(' ')[0],
-                                  uid: profile.uid);
-                          controllerDate.text = today.toString().split(' ')[0];
-                        });
-                        int drinked = (currentDiet.water / 0.25).round() - 1;
-                        List<WaterIntake> waterintakee = List.generate(
-                            (profile.water! / 0.25).round(),
-                            (index) => WaterIntake(
-                                index: index,
-                                drinked: index <= drinked ? true : false));
-                        setState(() {
-                          waterintake = waterintakee;
-                        });
-                        Weight? recordedWeightt =
-                            await weightRepo.getWeightByUidDate(
-                                profile.uid!, today.toString().split(' ')[0]);
-                        setState(() {
-                          recordedWeight = recordedWeightt;
-                          if (recordedWeightt != null) {
-                            objectifWeight = recordedWeightt.weight! -
-                                profile.startingWeight!;
-                          }
-                        });
-                        refreshProccess(currentDiet);
-                      }),
-                ],
-              ),
-              preferredSize: const Size.fromHeight(50)),
+          // bottom: PreferredSize(
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //       children: [
+          //         IconButton(
+          //             icon:
+          //                 const Icon(CupertinoIcons.arrowtriangle_left_circle),
+          //             onPressed: () async {
+          //               setState(() {
+          //                 today = today.add(const Duration(days: -1));
+          //               });
+          //               Diet? diet = await dietRepo
+          //                   .getByDay(today.toString().split(' ')[0]);
+          //               setState(() {
+          //                 currentDiet = diet ??
+          //                     Diet(
+          //                         dailyCalory: profile.idealCalory,
+          //                         dailyCarbs: profile.idealCarbohydrate,
+          //                         dailyFat: profile.idealFat,
+          //                         dailyProtein: profile.idealProtein,
+          //                         day: today.toString().split(' ')[0],
+          //                         uid: profile.uid);
+          //                 controllerDate.text = today.toString().split(' ')[0];
+          //               });
+          //               int drinked = (currentDiet.water / 0.25).round() - 1;
+          //               List<WaterIntake> waterintakee = List.generate(
+          //                   (profile.water! / 0.25).round(),
+          //                   (index) => WaterIntake(
+          //                       index: index,
+          //                       drinked: index <= drinked ? true : false));
+          //               setState(() {
+          //                 waterintake = waterintakee;
+          //               });
+          //               refreshProccess(currentDiet);
+          //             }),
+          //         InkWell(
+          //           onTap: () async {
+          //             DateTime? day = await showDatePicker(
+          //                 errorInvalidText: AppLocalizations.of(context)!.date_out_of_range,
+          //                 context: context,
+          //                 initialDate: today,
+          //                 firstDate: today.add(const Duration(days: -30)),
+          //                 lastDate: today.add(const Duration(days: 30)));
+          //             if (day != null) {
+          //               Diet? diet = await dietRepo
+          //                   .getByDay(day.toString().split(' ')[0]);
+          //               Profile? pr = await preferences.getUser();
+          //               setState(() {
+          //                 today = day;
+          //                 currentDiet = diet ??
+          //                     Diet(
+          //                         dailyCalory: profile.idealCalory,
+          //                         dailyCarbs: profile.idealCarbohydrate,
+          //                         dailyFat: profile.idealFat,
+          //                         dailyProtein: profile.idealProtein,
+          //                         day: today.toString().split(' ')[0],
+          //                         uid: profile.uid);
+          //                 if (pr != null) {
+          //                   profile = pr;
+          //                 }
+          //               });
+          //               int drinked = (currentDiet.water / 0.25).round() - 1;
+          //               List<WaterIntake> waterintakee = List.generate(
+          //                   (profile.water! / 0.25).round(),
+          //                   (index) => WaterIntake(
+          //                       index: index,
+          //                       drinked: index <= drinked ? true : false));
+          //               setState(() {
+          //                 waterintake = waterintakee;
+          //               });
+          //               Weight? recordedWeightt =
+          //                   await weightRepo.getWeightByUidDate(
+          //                       profile.uid!, today.toString().split(' ')[0]);
+          //               setState(() {
+          //                 recordedWeight = recordedWeightt;
+          //                 if (recordedWeightt != null) {
+          //                   objectifWeight = recordedWeightt.weight! -
+          //                       profile.startingWeight!;
+          //                 }
+          //               });
+          //               refreshProccess(currentDiet);
+          //             }
+          //           },
+          //           child: Row(
+          //             mainAxisSize: MainAxisSize.min,
+          //             children: [
+          //               const Icon(Icons.calendar_today, size: 20),
+          //               Text(today == todayDate
+          //                   ? " " + AppLocalizations.of(context)!.today
+          //                   : today == todayDate.add(const Duration(days: -1))
+          //                       ? " " + AppLocalizations.of(context)!.yesterday
+          //                       : today ==
+          //                               todayDate.add(const Duration(days: 1))
+          //                           ? " " +
+          //                               AppLocalizations.of(context)!.tomorrow
+          //                           : " ${DateFormat("EEEE").format(today)}, ${DateFormat("d MMMM").format(today)}"),
+          //             ],
+          //           ),
+          //         ),
+          //         IconButton(
+          //             icon:
+          //                 const Icon(CupertinoIcons.arrowtriangle_right_circle),
+          //             onPressed: () async {
+          //               setState(() {
+          //                 today = today.add(const Duration(days: 1));
+          //               });
+          //               Diet? diet = await dietRepo
+          //                   .getByDay(today.toString().split(' ')[0]);
+          //               setState(() {
+          //                 currentDiet = diet ??
+          //                     Diet(
+          //                         dailyCalory: profile.idealCalory,
+          //                         dailyCarbs: profile.idealCarbohydrate,
+          //                         dailyFat: profile.idealFat,
+          //                         dailyProtein: profile.idealProtein,
+          //                         day: today.toString().split(' ')[0],
+          //                         uid: profile.uid);
+          //                 controllerDate.text = today.toString().split(' ')[0];
+          //               });
+          //               int drinked = (currentDiet.water / 0.25).round() - 1;
+          //               List<WaterIntake> waterintakee = List.generate(
+          //                   (profile.water! / 0.25).round(),
+          //                   (index) => WaterIntake(
+          //                       index: index,
+          //                       drinked: index <= drinked ? true : false));
+          //               setState(() {
+          //                 waterintake = waterintakee;
+          //               });
+          //               Weight? recordedWeightt =
+          //                   await weightRepo.getWeightByUidDate(
+          //                       profile.uid!, today.toString().split(' ')[0]);
+          //               setState(() {
+          //                 recordedWeight = recordedWeightt;
+          //                 if (recordedWeightt != null) {
+          //                   objectifWeight = recordedWeightt.weight! -
+          //                       profile.startingWeight!;
+          //                 }
+          //               });
+          //               refreshProccess(currentDiet);
+          //             }),
+          //       ],
+          //     ),
+          //     preferredSize: const Size.fromHeight(50)),
+          
+          
           actions: [
             IconButton(
                 padding: const EdgeInsets.only(right: 10),

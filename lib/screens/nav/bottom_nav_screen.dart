@@ -2,6 +2,7 @@
 import 'dart:async';
 
 import 'package:fitfood/models/profile.dart';
+import 'package:fitfood/screens/ScreenTest/produitLiset.dart';
 import 'package:fitfood/screens/home_screen/diary.dart';
 import 'package:fitfood/screens/home_screen/meal_plan.dart';
 import 'package:fitfood/screens/home_screen/pay_screen.dart';
@@ -54,7 +55,7 @@ class _BottomNavViewState extends State<BottomNavView> {
       profile.pay == false &&
               DateTime.now().millisecondsSinceEpoch > profile.dateEnd!.toInt()
           ? const PayScreen()
-          : const MealPlan(),
+          :  ProductListScreen(),
       // BlocProvider(
       //   create: (context) => HomeRecipesBloc(),
       //   child: const HomeRecipeScreen(),

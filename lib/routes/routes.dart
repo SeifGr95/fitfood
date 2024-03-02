@@ -1,5 +1,7 @@
 import 'package:fitfood/SignUpScreen.dart';
 import 'package:fitfood/models/profile.dart';
+import 'package:fitfood/screens/ScreenTest/produit.dart';
+import 'package:fitfood/screens/ScreenTest/produitLiset.dart';
 import 'package:fitfood/screens/no_connection.dart';
 import 'package:fitfood/screens/authentification/login.dart';
 import 'package:fitfood/screens/authentification/register/step1_goal.dart';
@@ -22,6 +24,8 @@ class Routes {
         profile: Profile(), sampleIngredients: const [], kitchens: const []),
     '/step-email': (context) => Step3EnterEmail(profile: Profile()),
     '/login': (context) => const Login(),
+    '/addProductScreen': (context) =>  AddProductScreen(),
+    '/productListScreen': (context) =>  ProductListScreen(),
     '/home': (context) => const BottomNavView(),
     '/me': (context) => const Me(),
     '/test': (context) =>  SignUpScreen(),
